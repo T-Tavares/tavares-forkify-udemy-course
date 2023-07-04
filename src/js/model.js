@@ -209,6 +209,10 @@ export async function clearMyRecipes() {
   }
 }
 
+function newFeature() {
+  console.log('Welcome to the aplication');
+}
+
 // ---------------------------------------------------------------- //
 // ------------------------ MODEL - INIT() ------------------------ //
 // ---------------------------------------------------------------- //
@@ -221,4 +225,5 @@ function init() {
 // ---------------------------------------------------------------- //
 
 init();
-console.log('hello');
+newFeature();
+console.log('hello world');
