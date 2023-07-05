@@ -7,9 +7,6 @@ import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
-import devMenuView from './views/devMenuView.js';
-import devLoginView from './views/devLoginView.js';
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -170,9 +167,6 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-
-  devMenuView.addHandlerDev(controlDevMenu);
-  devLoginView.addHandlerDevLogin(controlDevLogin);
 };
 
 ///////////////////////////////////////

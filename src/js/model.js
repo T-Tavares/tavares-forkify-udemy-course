@@ -4,7 +4,6 @@ import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, API_KEY, DEV_PASS } from './config';
 // import { API_URL, RES_PER_PAGE, KEY, DEV_PASS } from './config';
 import { AJAX } from './helpers';
-import devMenuView from './views/devMenuView';
 
 // ------------------------ STATE OBJECT  ------------------------ //
 
