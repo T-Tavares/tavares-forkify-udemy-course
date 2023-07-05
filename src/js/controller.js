@@ -8,6 +8,7 @@ import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
 import devMenuView from './views/devMenuView.js';
+import devLoginView from './views/devLoginView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -135,6 +136,11 @@ function controlBookmarks() {
 
 // -------------------- CONTROLLER - DEV MENU --------------------- //
 
+function controlDevLogin() {
+  const userInputPass = prompt('What is the password?');
+  model.devLogin(userInputPass);
+}
+
 async function controlDevMenu(btnClicked) {
   if (btnClicked === 'CLEAR RECIPES') {
     await model.clearMyRecipes();
@@ -166,6 +172,7 @@ const init = function () {
   addRecipeView.addHandlerUpload(controlAddRecipe);
 
   devMenuView.addHandlerDev(controlDevMenu);
+  devLoginView.addHandlerDevLogin(controlDevLogin);
 };
 
 ///////////////////////////////////////

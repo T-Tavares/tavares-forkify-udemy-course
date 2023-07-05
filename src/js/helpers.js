@@ -1,5 +1,5 @@
 import { async } from 'regenerator-runtime';
-import { API_URL, TIMEOUT_SEC, KEY } from './config';
+import { TIMEOUT_SEC } from './config';
 import * as model from './model.js';
 
 const timeout = function (s) {

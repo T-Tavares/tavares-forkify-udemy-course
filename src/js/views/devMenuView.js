@@ -6,7 +6,8 @@ class DevMenuView extends View {
 
   addHandlerDev(handler) {
     this._parentElement.addEventListener('click', e => {
-      const btnClicked = e.target.innerHTML;
+      const btnClicked = e.target;
+      console.log(btnClicked);
       handler(btnClicked);
     });
   }

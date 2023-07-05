@@ -1,9 +1,10 @@
 // --------------------------- IMPORTS ---------------------------- //
-
+import 'dotenv/config';
 import { async } from 'regenerator-runtime';
-import { API_URL, RES_PER_PAGE, KEY } from './config';
+import { API_URL, RES_PER_PAGE, API_KEY, DEV_PASS } from './config';
+// import { API_URL, RES_PER_PAGE, KEY, DEV_PASS } from './config';
 import { AJAX } from './helpers';
-// import { getJSON, sendJSON } from './helpers';
+import devMenuView from './views/devMenuView';
 
 // ------------------------ STATE OBJECT  ------------------------ //
 
@@ -39,7 +40,7 @@ function createRecipeObject(data) {
 export async function loadRecipe(id) {
   try {
     // FETCHING RECIPE AND CONVERT JSON FILE
-    const data = await AJAX(`${API_URL}/${id}?key=${KEY}`);
+    const data = await AJAX(`${API_URL}/${id}?key=${API_KEY}`);
 
     // CONVERT TO JS OBJ WITH BETTER NOMENCLATURE
     state.recipe = createRecipeObject(data);
@@ -79,7 +80,7 @@ export async function uploadRecipe(newRecipe) {
       ingredients,
     };
 
-    const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
   } catch (err) {
@@ -101,7 +102,7 @@ export function updateServings(newServings) {
 export async function loadSearchResults(query) {
   try {
     state.search.query = query;
-    const data = await AJAX(`${API_URL}?search=${query}&key=${KEY}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
 
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -209,6 +210,11 @@ export async function clearMyRecipes() {
   }
 }
 
+export function devLogin(input) {
+  // if (+input === +DEV_PASS) devMenuView.render();
+  if (+input === +DEV_PASS) devMenuView.render();
+  else console.log('wrong password');
+}
 // ---------------------------------------------------------------- //
 // ------------------------ MODEL - INIT() ------------------------ //
 // ---------------------------------------------------------------- //
