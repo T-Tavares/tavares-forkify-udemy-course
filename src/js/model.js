@@ -15,7 +15,13 @@ export const state = {
     page: 1,
     resultsPerPage: RES_PER_PAGE,
   },
+  clearedRecipes: {
+    ids: [],
+    titles: [],
+    amount: 0,
+  },
   bookmarks: [],
+  devLogged: false,
 };
 
 // ----------------------- MODEL - RECIPES ------------------------ //
@@ -160,16 +166,19 @@ export function deleteBookmark(id) {
 // ---------------------- DEVELOPER HELPER  ----------------------- //
 // -------------------------- FUNCTIONS --------------------------- //
 
+export function devLoginCheck(input) {
+  if (+input === +DEV_PASS) state.devLogged = true;
+  else throw new Error('Wrong Password');
+}
+
 export function clearBookmarks() {
   localStorage.clear('bookmarks');
   state.bookmarks = [];
 }
 
-export async function clearMyRecipes() {
-  const query = prompt('Type a QUERY for the recipes you want to DELETE.');
-
+export async function clearMyRecipes(query) {
   try {
-    const searchURL = `${API_URL}?search=${query}&key=${KEY}`;
+    const searchURL = `${API_URL}?search=${query}&key=${API_KEY}`;
 
     // 01. Fetch Recipes
     const res = await fetch(searchURL);
@@ -182,38 +191,23 @@ export async function clearMyRecipes() {
         return { title: rec.title, id: rec.id };
       });
 
-    // 03. Break Obj into arrays to be used on DELETE req and final Log Msg.
-    const recipesAmount = recipesOBJ.length;
-    const recipesTitles = recipesOBJ.map(rec => rec.title);
-    const recipesIDs = recipesOBJ.map(rec => rec.id);
+    // 03. Fill state with latest cleared recipes (will be used on DevLog())
+    state.clearedRecipes.amount = recipesOBJ.length;
+    state.clearedRecipes.titles = recipesOBJ.map(rec => rec.title);
+    state.clearedRecipes.id = recipesOBJ.map(rec => rec.id);
 
     // 04. Delete Recipes and Bookmarks
-    for await (id of recipesIDs) {
-      await fetch(`${API_URL}/${id}?key=${KEY}`, {
+    for await (id of state.clearedRecipes.id) {
+      await fetch(`${API_URL}/${id}?key=${API_KEY}`, {
         method: 'DELETE',
       });
       deleteBookmark(id);
     }
-
-    // 05. Final Log
-    console.log(
-      recipesAmount === 0
-        ? 'No Recipes to be deleted on this query'
-        : `${recipesAmount} ${
-            recipesAmount > 1 ? 'Recipes where' : 'Recipe was'
-          } Deleted.\n\nHere is a list with them:`
-    );
-    if (recipesAmount >= 1) console.table(recipesTitles);
   } catch (err) {
     console.error('Error 🧐', err.message);
   }
 }
 
-export function devLogin(input) {
-  // if (+input === +DEV_PASS) devMenuView.render();
-  if (+input === +DEV_PASS) devMenuView.render();
-  else console.log('wrong password');
-}
 // ---------------------------------------------------------------- //
 // ------------------------ MODEL - INIT() ------------------------ //
 // ---------------------------------------------------------------- //

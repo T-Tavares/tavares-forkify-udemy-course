@@ -7,6 +7,9 @@ import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
+import devLoginView from './views/devLoginView.js';
+import devMenuView from './views/devMenuView.js';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -134,25 +137,35 @@ function controlBookmarks() {
 // -------------------- CONTROLLER - DEV MENU --------------------- //
 
 function controlDevLogin() {
-  const userInputPass = prompt('What is the password?');
-  model.devLogin(userInputPass);
+  try {
+    const userPassInput = prompt('What is the password?');
+    model.devLoginCheck(userPassInput);
+
+    if (model.state.devLogged) {
+      // 1. Change icon color to Green
+      devLoginView.loggedInStyle();
+      // 2. Render Dev Menu
+      devMenuView.render(model.state.devLogged);
+    }
+  } catch (err) {
+    console.error('🧐', err.message);
+  }
 }
 
 async function controlDevMenu(btnClicked) {
   if (btnClicked === 'CLEAR RECIPES') {
-    await model.clearMyRecipes();
+    await model.clearMyRecipes(devMenuView.clearRecipesQuery());
+    bookmarksView.render();
+    resultsView._clear();
+    recipeView._clear();
+    devMenuView._clearHash();
+    devMenuView._devLog(model.state.clearedRecipes);
   }
 
   // 02. Clear Bookmarks
   if (btnClicked === 'CLEAR BOOKMARKS') {
     model.clearBookmarks();
-    bookmarksView.render(model.state.bookmarks);
-    devMenuView.renderMessage('Bookmarks Cleared');
   }
-
-  // 03. Reload Page / Reset Dev Menu to original state
-  const indexURL = window.location.href.split('#')[0];
-  location.replace(indexURL);
 }
 
 // ---------------------------------------------------------------- //
@@ -167,6 +180,9 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+
+  devLoginView.addHandlerDevLogin(controlDevLogin);
+  devMenuView.addHandlerDevMenu(controlDevMenu);
 };
 
 ///////////////////////////////////////

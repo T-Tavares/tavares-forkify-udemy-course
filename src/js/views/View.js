@@ -64,6 +64,13 @@ export default class View {
     this._parentElement.innerHTML = '';
   }
 
+  _clearHash() {
+    history.replaceState(
+      {},
+      document.title,
+      window.location.href.split('#')[0]
+    );
+  }
   // ------------------- VIEW - LOADING SPINNER  -------------------- //
   // -------------------------- FUNCTIONS --------------------------- //
 

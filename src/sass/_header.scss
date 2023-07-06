@@ -179,15 +179,22 @@
   }
 }
 
-.nav__btn--delete-recipe:hover + .dev__menu {
+.nav__btn-dev:hover + .dev__menu {
   visibility: visible;
   transition: all 0.5s;
   opacity: 100%;
 }
-.nav__btn--delete-recipe,
+.nav__btn-dev,
 .nav__icon-dev {
   color: #cf1111;
   svg {
     fill: #cf1111;
+  }
+}
+
+.logged {
+  color: #23bc00;
+  svg {
+    fill: #23bc00;
   }
 }
