@@ -1,3 +1,5 @@
+@import 'responsibleMobile';
+
 .header {
   grid-area: head;
   background-color: $color-grey-light-1;
@@ -5,10 +7,24 @@
   align-items: center;
   justify-content: space-between;
 
+  // Tavares SASS
+  @include mobile {
+    justify-content: space-around;
+    padding: 1rem 2rem;
+  }
+
   &__logo {
     margin-left: 4rem;
     height: 4.6rem;
     display: block;
+
+    // Tavares SASS
+    @include mobile {
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: 0 0;
+      margin: 0;
+    }
   }
 }
 
@@ -29,30 +45,45 @@
     border: none;
     background: none;
     font-family: inherit;
+    outline: none;
     color: inherit;
     font-size: 1.7rem;
     width: 30rem;
+  }
 
-    &:focus {
-      outline: none;
-    }
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $color-grey-light-3;
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    width: auto;
 
     &::placeholder {
-      color: $color-grey-light-3;
+      color: white;
     }
-
-    @media only screen and (max-width: $bp-medium) {
-      width: auto;
-
-      &::placeholder {
-        color: white;
-      }
-    }
+  }
+  // Tavares SASS
+  @include mobile {
+    width: 75%;
   }
 
   &__btn {
     font-weight: 600;
     font-family: inherit;
+
+    // Tavares SASS
+    @include mobile {
+      padding: 0;
+      height: 5rem;
+      aspect-ratio: 1/1;
+      svg {
+        margin: 0 1.4rem;
+      }
+    }
   }
 }
 
@@ -102,6 +133,20 @@
       background-color: $color-grey-light-2;
     }
   }
+  // Tavares SASS
+  @include mobile {
+    position: fixed;
+    bottom: 5vh;
+    left: 50%;
+    translate: -50% 0;
+
+    width: 95vw;
+    padding: 2vh;
+
+    border: 2px solid #{$color-grey-light-2};
+    border-radius: 5rem;
+    background-color: #fff;
+  }
 }
 
 .bookmarks {
@@ -143,6 +188,7 @@
   }
 }
 
+// Tavares SASS
 .dev__menu {
   position: absolute;
   right: 0;
@@ -178,7 +224,7 @@
     }
   }
 }
-
+// Tavares SASS
 .nav__btn-dev:hover + .dev__menu {
   visibility: visible;
   transition: all 0.5s;
@@ -191,7 +237,7 @@
     fill: #cf1111;
   }
 }
-
+// Tavares SASS
 .logged {
   color: #23bc00;
   svg {

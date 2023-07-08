@@ -10,8 +10,16 @@ class DevLoginView extends View {
     });
   }
 
+  devLoginPrompt() {
+    return prompt('Developer Password Required.');
+  }
+
   loggedInStyle() {
     this._parentElement.classList.toggle('logged');
+  }
+
+  _devLog() {
+    console.log(`You're logged as a Dev`);
   }
 }
 

@@ -10,6 +10,8 @@ import addRecipeView from './views/addRecipeView.js';
 import devLoginView from './views/devLoginView.js';
 import devMenuView from './views/devMenuView.js';
 
+import respMobileView from './views/respMobileView.js';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -138,13 +140,13 @@ function controlBookmarks() {
 
 function controlDevLogin() {
   try {
-    const userPassInput = prompt('What is the password?');
-    model.devLoginCheck(userPassInput);
+    // 1. Request dev password and check if its correct
+    model.devLoginCheck(devLoginView.devLoginPrompt());
 
     if (model.state.devLogged) {
-      // 1. Change icon color to Green
+      // 2. Change icon color to Green
       devLoginView.loggedInStyle();
-      // 2. Render Dev Menu
+      // 3. Render Dev Menu
       devMenuView.render(model.state.devLogged);
     }
   } catch (err) {
@@ -168,6 +170,7 @@ async function controlDevMenu(btnClicked) {
   }
 }
 
+function controlRespMobile() {}
 // ---------------------------------------------------------------- //
 // ---------------------- CONTROLLER INIT() ----------------------- //
 // ---------------------------------------------------------------- //
@@ -183,6 +186,8 @@ const init = function () {
 
   devLoginView.addHandlerDevLogin(controlDevLogin);
   devMenuView.addHandlerDevMenu(controlDevMenu);
+
+  respMobileView.addHandlerRespMobile(controlRespMobile);
 };
 
 ///////////////////////////////////////

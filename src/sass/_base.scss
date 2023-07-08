@@ -1,3 +1,5 @@
+@import 'responsibleMobile';
+
 // $color-primary: #f59a83;
 $color-primary: #f38e82;
 $color-grad-1: #fbdb89;
@@ -67,5 +69,9 @@ body {
     max-width: 100%;
     margin: 0;
     border-radius: 0;
+  }
+
+  // Tavares SASS
+  @include mobile {
   }
 }
