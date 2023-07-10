@@ -36,11 +36,16 @@ async function controlRecipes() {
 
     // Loading recipe
     await model.loadRecipe(id);
-    recipeView.show();
-    resultsView.listSwitchOn();
 
     // RENDERING RECIPE
     recipeView.render(model.state.recipe);
+    recipeView.show(); // MOBILE
+
+    // SHOW BACK TO LIST BUTTON
+    resultsView.listSwitchOn();
+
+    // HIDING QUERY RESULTS
+    resultsView.hide();
 
     // 5. MOBILE RESPONSIVENESS - Swap to recipeView
     recipeView.show();
