@@ -1,5 +1,5 @@
 import * as model from './model.js';
-import { MODAL_CLOSE_SEC } from './config.js';
+import { MOBILE_WIDTH, MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -36,9 +36,15 @@ async function controlRecipes() {
 
     // Loading recipe
     await model.loadRecipe(id);
+    recipeView.show();
+    resultsView.listSwitchOn();
 
     // RENDERING RECIPE
     recipeView.render(model.state.recipe);
+
+    // 5. MOBILE RESPONSIVENESS - Swap to recipeView
+    recipeView.show();
+    resultsView.hide();
   } catch (err) {
     recipeView.renderError();
     console.log(err);
@@ -101,6 +107,12 @@ async function controlSearchResults() {
 
     // 4. Rendering Pagination
     paginationView.render(model.state.search);
+
+    // 5. MOBILE RESPONSIVENESS - Hide recipeView on show Results
+    if (window.innerWidth < MOBILE_WIDTH) {
+      recipeView.hide();
+      resultsView.show(this.parentElement);
+    }
   } catch (err) {}
 }
 
@@ -112,6 +124,11 @@ function controlPagination(goToPage) {
   paginationView.render(model.state.search);
 }
 
+function controlBackToListMobile() {
+  recipeView.hide();
+  resultsView.show();
+  resultsView.listSwitchOff();
+}
 // -------------------- CONTROLLER - BOOKMARKS -------------------- //
 // -------------------------- FUNCTIONS --------------------------- //
 
@@ -188,6 +205,7 @@ const init = function () {
   devMenuView.addHandlerDevMenu(controlDevMenu);
 
   respMobileView.addHandlerRespMobile(controlRespMobile);
+  resultsView.addHandlerBackToListMobile(controlBackToListMobile);
 };
 
 ///////////////////////////////////////

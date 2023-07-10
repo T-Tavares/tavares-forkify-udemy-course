@@ -6,3 +6,4 @@ export const RES_PER_PAGE = 10;
 export const MODAL_CLOSE_SEC = 1.5;
 export const API_KEY = process.env.API_KEY;
 export const DEV_PASS = process.env.DEV_PASS;
+export const MOBILE_WIDTH = 415;

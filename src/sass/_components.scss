@@ -1,3 +1,5 @@
+@import 'responsibleMobile';
+
 %btn {
   background-image: $gradient;
   border-radius: 10rem;
@@ -117,6 +119,12 @@
     width: 2.5rem;
     fill: #fff;
   }
+
+  @include mobile {
+    aspect-ratio: 1/1;
+    position: relative;
+    right: 3rem;
+  }
 }
 
 .btn--tiny {
@@ -209,5 +217,30 @@
     font-size: 1.8rem;
     line-height: 1.5;
     font-weight: 600;
+  }
+}
+
+// TAVARES SASS
+.recipe-list-switch-btn {
+  position: fixed;
+  top: 2rem; // 10rem is the header height
+  left: 2.5rem;
+
+  aspect-ratio: 1/1;
+  height: 50px;
+  width: 50px;
+  padding: 0 12px;
+
+  background-image: linear-gradient(to right bottom, #fecf95, #fff5e8);
+  box-shadow: 5px 4px 5px rgba(170, 71, 0, 0.1);
+  font-size: 4rem;
+  color: $color-primary;
+
+  transform: rotateY(180deg);
+
+  z-index: 2;
+
+  &:hover {
+    transform: rotateY(180deg) scale(1.1);
   }
 }

@@ -71,6 +71,14 @@ export default class View {
       window.location.href.split('#')[0]
     );
   }
+
+  hide(el = this._parentElement) {
+    el.classList.add('hidden-off');
+  }
+
+  show(el = this._parentElement) {
+    el.classList.remove('hidden-off');
+  }
   // ------------------- VIEW - LOADING SPINNER  -------------------- //
   // -------------------------- FUNCTIONS --------------------------- //
 

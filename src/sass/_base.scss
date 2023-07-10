@@ -72,6 +72,16 @@ body {
   }
 
   // Tavares SASS
+
   @include mobile {
+    grid-template-rows: 10rem minmax(100rem, auto);
+    grid-template-columns: 100vw;
+    grid-template-areas: 'head';
   }
+}
+.hidden-off {
+  display: none;
+  visibility: hidden;
+  height: 0;
+  padding: 0 !important;
 }

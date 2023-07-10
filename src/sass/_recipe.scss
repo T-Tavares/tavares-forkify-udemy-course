@@ -1,5 +1,10 @@
+@import 'responsibleMobile';
+
 .recipe {
   background-color: $color-grey-light-1;
+  @include mobile {
+    height: fit-content;
+  }
 
   ///////////
   // FIGURE
@@ -23,6 +28,10 @@
         $color-grad-2
       );
       opacity: 0.6;
+    }
+
+    // TAVARES SASS
+    @include mobile {
     }
   }
 
@@ -55,6 +64,11 @@
         $color-grad-1,
         $color-grad-2
       );
+
+      // TAVARES SASS
+      @include mobile {
+        font-size: 2.5rem;
+      }
     }
 
     @media only screen and (max-width: $bp-medium) {
@@ -68,6 +82,11 @@
     display: flex;
     align-items: center;
     padding: 7.5rem 8rem 3.5rem 8rem;
+
+    // TAVARES SASS
+    @include mobile {
+      padding: 3rem 2rem;
+    }
   }
 
   &__info {
@@ -78,6 +97,13 @@
 
     &:not(:last-child) {
       margin-right: 4.5rem;
+    }
+
+    @include mobile {
+      font-size: 1.5rem;
+    }
+
+    .btn--bookmark {
     }
   }
 
