@@ -181,7 +181,10 @@
       background-color: $color-grey-light-2;
     }
   }
-
+  @include mobile {
+    bottom: 220%;
+    right: -100%;
+  }
   &:hover,
   .nav__btn--bookmarks:hover + & {
     visibility: visible;

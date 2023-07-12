@@ -1,5 +1,10 @@
+// MODEL IMPORT
 import * as model from './model.js';
+
+// CONFIG IMPORT
 import { MOBILE_WIDTH, MODAL_CLOSE_SEC } from './config.js';
+
+// VIEWS IMPORTS
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -11,11 +16,15 @@ import devLoginView from './views/devLoginView.js';
 import devMenuView from './views/devMenuView.js';
 
 import respMobileView from './views/respMobileView.js';
+import ghostElView from './views/ghostElView.js';
 
+// OTHER IMPORTS
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 ///////////////////////////////////////
+
+function controlGhostEl() {}
 
 // --------------------- CONTROLLER - RECIPES --------------------- //
 // -------------------------- FUNCTIONS --------------------------- //
@@ -39,17 +48,9 @@ async function controlRecipes() {
 
     // RENDERING RECIPE
     recipeView.render(model.state.recipe);
-    recipeView.show(); // MOBILE
 
-    // SHOW BACK TO LIST BUTTON
-    resultsView.listSwitchOn();
-
-    // HIDING QUERY RESULTS
-    resultsView.hide();
-
-    // 5. MOBILE RESPONSIVENESS - Swap to recipeView
-    recipeView.show();
-    resultsView.hide();
+    // MOBILE RESPONSIVINESS - Show Recipe / Hide Results
+    respMobileView.ifMobile(respMobileView.switchRecipeResults('recipe'));
   } catch (err) {
     recipeView.renderError();
     console.log(err);
@@ -113,11 +114,8 @@ async function controlSearchResults() {
     // 4. Rendering Pagination
     paginationView.render(model.state.search);
 
-    // 5. MOBILE RESPONSIVENESS - Hide recipeView on show Results
-    if (window.innerWidth < MOBILE_WIDTH) {
-      recipeView.hide();
-      resultsView.show(this.parentElement);
-    }
+    // MOBILE RESPONSIVINESS - Hide Recipe / Show Results
+    respMobileView.ifMobile(respMobileView.switchRecipeResults('results'));
   } catch (err) {}
 }
 
@@ -159,6 +157,7 @@ function controlBookmarks() {
 }
 
 // -------------------- CONTROLLER - DEV MENU --------------------- //
+// -------------------------- FUNCTIONS --------------------------- //
 
 function controlDevLogin() {
   try {
@@ -192,7 +191,20 @@ async function controlDevMenu(btnClicked) {
   }
 }
 
-function controlRespMobile() {}
+// --------------------- CONTROLLER - MOBILE ---------------------- //
+// -------------------------- FUNCTIONS --------------------------- //
+
+function controlRespMobile() {
+  /*
+  The Callback function is not called here because of the nature and 
+  logic of the ifMobile() and all the mobile responsiviness adjustments
+  */
+  respMobileView.ifMobile(respMobileView.initMobile);
+}
+
+function controlSwitchMobileSec() {
+  respMobileView.ifMobile(respMobileView.switchRecipeResults('results'));
+}
 // ---------------------------------------------------------------- //
 // ---------------------- CONTROLLER INIT() ----------------------- //
 // ---------------------------------------------------------------- //
@@ -210,7 +222,7 @@ const init = function () {
   devMenuView.addHandlerDevMenu(controlDevMenu);
 
   respMobileView.addHandlerRespMobile(controlRespMobile);
-  resultsView.addHandlerBackToListMobile(controlBackToListMobile);
+  respMobileView.addHandlerSwitchSecMobile(controlSwitchMobileSec);
 };
 
 ///////////////////////////////////////

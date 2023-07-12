@@ -3,7 +3,7 @@ import previewView from './previewView.js';
 
 class ResultsView extends View {
   _parentElement = document.querySelector('.results');
-  _backtoListBtn = document.querySelector('.recipe-list-switch-btn');
+  // _backtoListBtn = document.querySelector('.recipe-list-switch-btn');
   _errorMessage = 'No recipes found for your query. Please try again.';
   _message = '';
 
@@ -12,17 +12,6 @@ class ResultsView extends View {
 
   _generateMarkup() {
     return this._data.map(result => previewView.render(result, false)).join('');
-  }
-
-  addHandlerBackToListMobile(handler) {
-    this._backtoListBtn.addEventListener('click', handler);
-  }
-
-  listSwitchOff() {
-    this._backtoListBtn.classList.add('hidden-off');
-  }
-  listSwitchOn() {
-    this._backtoListBtn.classList.remove('hidden-off');
   }
 
   hide(el = this._parentElement) {
