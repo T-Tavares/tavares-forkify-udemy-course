@@ -52,7 +52,8 @@ class respMobileView extends View {
   ifMobile = function (callback) {
     if (window.innerWidth < 415) {
       callback();
-    }
+      return true;
+    } else return false;
   };
 
   // BOOKMARKS SECTION
@@ -105,37 +106,6 @@ class respMobileView extends View {
   // ----------------------- SECTIONS STYLING ----------------------- //
   // -------------------------- FUNCTIONS  -------------------------- //
 
-  openingRecipeSecStyle(recipesArr) {
-    const openingMsgMarkup = `
-      <div class="mobile-welcome">
-        <h1>Start Searching for a Dish or Ingredient</h1>
-        <h1>Or go straight to one of our most viewed recipes below</h1>
-      </div>
-    `;
-
-    const openingRecipesMarkup = `
-    <ul>
-      ${recipesArr.map(recipe => previewView.render(recipe, false)).join('')}
-    </ul>
-    `;
-
-    const jonasMarkup = `
-    <p class="copyright copyright_mobile">
-      &copy; Copyright by
-      <a
-        class="twitter-link"
-        target="_blank"
-        href="https://twitter.com/jonasschmedtman"
-        >Jonas Schmedtmann</a>
-        . Use for learning or your portfolio. Don't use to teach. Don't claim as your own.
-    </p>
-    `;
-
-    this.recipeSec.insertAdjacentHTML('afterbegin', jonasMarkup);
-    this.recipeSec.insertAdjacentHTML('afterbegin', openingRecipesMarkup);
-    this.recipeSec.insertAdjacentHTML('afterbegin', openingMsgMarkup);
-  }
-
   navSecStyle() {
     this.addRecipeBtn.closest('.nav__item').classList.add('hidden-off');
   }
@@ -152,15 +122,17 @@ class respMobileView extends View {
 
   // ---------------------------------------------------------------------- //
   menuOpenFocus(btnClicked) {
-    // if (btnClicked === 'nav__btn--dev') {
-    if (btnClicked === 'logged') {
-      this.devSec.classList.remove('hidden-off');
-      this.navOverlay.classList.remove('hidden-off');
-    }
-    if (btnClicked === 'nav__btn--bookmarks') {
-      this.bookmarksMoblieSec.classList.remove('hidden-off');
-      this.navOverlay.classList.remove('hidden-off');
-    }
+    this.ifMobile(() => {
+      if (btnClicked === 'logged') {
+        this.devSec.classList.remove('hidden-off');
+        this.navOverlay.classList.remove('hidden-off');
+      }
+      if (btnClicked === 'nav__btn--bookmarks') {
+        this.bookmarksMoblieSec.classList.remove('hidden-off');
+        this.bookmarksSec.classList.add('hidden-off'); // avoid overlap between two bookmarks
+        this.navOverlay.classList.remove('hidden-off');
+      }
+    });
   }
 
   menuClose() {
@@ -194,7 +166,6 @@ class respMobileView extends View {
   }
 
   addHandlerRenderBookmarksMobile(handler) {
-    console.log('mobile bookmarks handler working');
     handler();
   }
 
@@ -209,11 +180,6 @@ class respMobileView extends View {
 
   _addHandlerCloseMenuMobile() {
     this.navOverlay.addEventListener('click', this.menuClose.bind(this));
-  }
-
-  addHandlerOpeningMobile(handler) {
-    if (window.location.hash) return;
-    this.ifMobile(handler);
   }
 }
 

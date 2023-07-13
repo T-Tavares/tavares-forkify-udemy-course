@@ -17,6 +17,8 @@ import devMenuView from './views/devMenuView.js';
 
 import respMobileView from './views/respMobileView.js';
 
+import openingView from './views/openingView.js';
+
 // OTHER IMPORTS
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -229,9 +231,11 @@ function controlMenuMobile(btnClicked) {
   respMobileView.menuOpenFocus(btnClicked);
 }
 
-async function controlOpeningMobile() {
+// ---------------------------------------------------------------- //
+
+async function controlOpening() {
   const recipesArr = await model.fetchRandomRecipesArr(RECIPES_NUM_OPENING);
-  respMobileView.openingRecipeSecStyle(recipesArr);
+  openingView.openingMsgAndRecipes(recipesArr);
 }
 
 // ---------------------------------------------------------------- //
@@ -254,7 +258,8 @@ const init = function () {
   respMobileView.addHandlerSwitchSecMobile(controlSwitchMobileSec);
   respMobileView.addHandlerRenderBookmarksMobile(controlRenderBookmarksMobile);
   respMobileView.addHandlerMenuMobile(controlMenuMobile);
-  respMobileView.addHandlerOpeningMobile(controlOpeningMobile);
+
+  openingView.addHandlerOpening(controlOpening);
 };
 
 ///////////////////////////////////////

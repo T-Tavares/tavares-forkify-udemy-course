@@ -24,8 +24,9 @@ export const state = {
   devLogged: false,
 };
 
-// ----------------------- MODEL - MOBILE ------------------------- //
+// ----------------------- MODEL - OPENING ------------------------ //
 // -------------------------- FUNCTIONS --------------------------- //
+
 function randomArrEl(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -57,7 +58,6 @@ export async function fetchRandomRecipesArr(num) {
     };
     recipesArr.push(recipeObj);
   }
-  console.log(recipesArr);
   return recipesArr;
 }
 

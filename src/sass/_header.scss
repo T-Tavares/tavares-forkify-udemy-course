@@ -47,7 +47,8 @@
     font-family: inherit;
     outline: none;
     color: inherit;
-    font-size: 1.7rem;
+    // font-size: 1.7rem;
+    font-size: 17px;
     width: 30rem;
   }
 
@@ -213,7 +214,7 @@
   position: fixed;
   top: 0;
   backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
   height: 100vh;
   width: 100vw;
 
@@ -272,7 +273,7 @@
   }
 }
 // Tavares SASS
-.nav__btn-dev:hover + .dev__menu {
+.nav__btn--dev:hover + .dev__menu {
   visibility: visible;
   transition: all 0.5s;
   opacity: 100%;

@@ -11,7 +11,8 @@ class DevLoginView extends View {
   }
 
   devLoginPrompt() {
-    return prompt('Developer Password Required.');
+    const userPass = prompt('Developer Password Required.');
+    return userPass;
   }
 
   loggedInStyle() {

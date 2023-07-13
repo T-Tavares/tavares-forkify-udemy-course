@@ -63,7 +63,7 @@ body {
   grid-template-columns: 1fr 2fr;
   grid-template-areas:
     'head head'
-    'list recipe';
+    'recipe recipe';
 
   @media only screen and (max-width: $bp-large) {
     max-width: 100%;
@@ -72,7 +72,6 @@ body {
   }
 
   // Tavares SASS
-
   @include mobile {
     grid-template-rows: 10rem minmax(100rem, auto);
     grid-template-columns: 100vw;
@@ -86,4 +85,10 @@ body {
   visibility: hidden;
   height: 0;
   padding: 0 !important;
+}
+
+input,
+select,
+textarea {
+  touch-action: none;
 }
