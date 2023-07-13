@@ -2,7 +2,7 @@
 import * as model from './model.js';
 
 // CONFIG IMPORT
-import { MOBILE_WIDTH, MODAL_CLOSE_SEC } from './config.js';
+import { MODAL_CLOSE_SEC, RECIPES_NUM_OPENING } from './config.js';
 
 // VIEWS IMPORTS
 import recipeView from './views/recipeView.js';
@@ -16,15 +16,12 @@ import devLoginView from './views/devLoginView.js';
 import devMenuView from './views/devMenuView.js';
 
 import respMobileView from './views/respMobileView.js';
-import ghostElView from './views/ghostElView.js';
 
 // OTHER IMPORTS
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 ///////////////////////////////////////
-
-function controlGhostEl() {}
 
 // --------------------- CONTROLLER - RECIPES --------------------- //
 // -------------------------- FUNCTIONS --------------------------- //
@@ -51,6 +48,7 @@ async function controlRecipes() {
 
     // MOBILE RESPONSIVINESS - Show Recipe / Hide Results
     respMobileView.ifMobile(respMobileView.switchRecipeResults('recipe'));
+    respMobileView.menuClose();
   } catch (err) {
     recipeView.renderError();
     console.log(err);
@@ -127,11 +125,6 @@ function controlPagination(goToPage) {
   paginationView.render(model.state.search);
 }
 
-function controlBackToListMobile() {
-  recipeView.hide();
-  resultsView.show();
-  resultsView.listSwitchOff();
-}
 // -------------------- CONTROLLER - BOOKMARKS -------------------- //
 // -------------------------- FUNCTIONS --------------------------- //
 
@@ -150,10 +143,17 @@ function controlAddBookmark() {
 
   // 3 Render bookmarks
   bookmarksView.render(model.state.bookmarks);
+
+  // 4 Render Mobile Bookmarks When bookmark is added or took out
+  respMobileView.renderBookmarksMobile(model.state.bookmarks);
 }
 
 function controlBookmarks() {
   bookmarksView.render(model.state.bookmarks);
+}
+
+function controlRenderBookmarksMobile() {
+  respMobileView.renderBookmarksMobile(model.state.bookmarks);
 }
 
 // -------------------- CONTROLLER - DEV MENU --------------------- //
@@ -202,9 +202,38 @@ function controlRespMobile() {
   respMobileView.ifMobile(respMobileView.initMobile);
 }
 
-function controlSwitchMobileSec() {
-  respMobileView.ifMobile(respMobileView.switchRecipeResults('results'));
+async function controlSwitchMobileSec() {
+  // check if search results is an empty element
+  if (respMobileView.searchResults.innerHTML.trim() === '') {
+    // if yes, clear recipe el
+    respMobileView.recipeSec.innerHTML = '';
+
+    // fetch and render mobile opening msg and recipes
+    const recipesArr = await model.fetchRandomRecipesArr(RECIPES_NUM_OPENING);
+    respMobileView.openingRecipeSecStyle(recipesArr);
+
+    // if not, switch back to results
+  } else {
+    respMobileView.ifMobile(respMobileView.switchRecipeResults('results'));
+  }
+
+  // Getting rid of hash WITHOUT reload page if search has some results
+  window.history.pushState(
+    '',
+    document.title,
+    window.location.href.split('#')[0]
+  );
 }
+
+function controlMenuMobile(btnClicked) {
+  respMobileView.menuOpenFocus(btnClicked);
+}
+
+async function controlOpeningMobile() {
+  const recipesArr = await model.fetchRandomRecipesArr(RECIPES_NUM_OPENING);
+  respMobileView.openingRecipeSecStyle(recipesArr);
+}
+
 // ---------------------------------------------------------------- //
 // ---------------------- CONTROLLER INIT() ----------------------- //
 // ---------------------------------------------------------------- //
@@ -223,6 +252,9 @@ const init = function () {
 
   respMobileView.addHandlerRespMobile(controlRespMobile);
   respMobileView.addHandlerSwitchSecMobile(controlSwitchMobileSec);
+  respMobileView.addHandlerRenderBookmarksMobile(controlRenderBookmarksMobile);
+  respMobileView.addHandlerMenuMobile(controlMenuMobile);
+  respMobileView.addHandlerOpeningMobile(controlOpeningMobile);
 };
 
 ///////////////////////////////////////

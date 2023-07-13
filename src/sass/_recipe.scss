@@ -2,8 +2,11 @@
 
 .recipe {
   background-color: $color-grey-light-1;
+
+  // TAVARES SASS
   @include mobile {
     height: fit-content;
+    grid-row: 2;
   }
 
   ///////////
@@ -190,6 +193,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    // TAVARES SASS
+    @include mobile {
+      padding-bottom: 12vh;
+    }
   }
 
   &__directions-text {
@@ -201,5 +209,15 @@
 
   &__publisher {
     font-weight: 700;
+  }
+}
+
+.mobile-welcome {
+  background-color: #fff;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  & h1 {
+    margin-bottom: 10px;
   }
 }

@@ -95,6 +95,7 @@
     list-style: none;
     display: flex;
     height: 100%;
+    justify-content: space-around;
   }
 
   &__item {
@@ -136,7 +137,7 @@
   // Tavares SASS
   @include mobile {
     position: fixed;
-    bottom: 5vh;
+    bottom: 2vh;
     left: 50%;
     translate: -50% 0;
 
@@ -146,7 +147,7 @@
     border: 2px solid #{$color-grey-light-2};
     border-radius: 5rem;
     background-color: #fff;
-    z-index: 1;
+    z-index: 11;
   }
 }
 
@@ -162,7 +163,7 @@
 
   visibility: hidden;
   opacity: 0;
-  transition: all 0.5s 0.2s;
+  transition: all 0.2s 0.2s;
 
   &__list {
     list-style: none;
@@ -175,21 +176,49 @@
     display: flex;
     align-items: center;
     height: 100%;
-    transition: all 0.3s;
+    transition: all 0.2s;
 
     &:hover {
       background-color: $color-grey-light-2;
     }
   }
   @include mobile {
-    bottom: 220%;
-    right: -100%;
+    bottom: 4rem;
+    left: -15rem;
   }
   &:hover,
   .nav__btn--bookmarks:hover + & {
     visibility: visible;
     opacity: 1;
   }
+}
+
+// TAVARES SASS
+
+.bookmarks-mobile {
+  position: fixed;
+  bottom: 10vh;
+  height: fit-content;
+  width: fit-content;
+  padding-bottom: 5rem;
+  list-style: none;
+  background-color: #fff;
+
+  transition: all 0.2s;
+
+  z-index: 10;
+}
+// TAVARES SASS
+.nav__overlay {
+  position: fixed;
+  top: 0;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+
+  transition: all 0.2s;
+  z-index: 9;
 }
 
 // Tavares SASS
@@ -205,10 +234,24 @@
   transition: all 0.3s;
 
   z-index: 1;
+
   &:hover {
     visibility: visible;
     opacity: 100%;
+    @include mobile {
+      visibility: visible;
+      opacity: 100%;
+      bottom: 5rem;
+    }
   }
+  &__mobile {
+    @include mobile {
+      visibility: visible;
+      opacity: 100%;
+      bottom: 5rem;
+    }
+  }
+
   ul {
     display: flex;
     flex-direction: column;
@@ -234,7 +277,7 @@
   transition: all 0.5s;
   opacity: 100%;
 }
-.nav__btn-dev,
+.nav__btn--dev,
 .nav__icon-dev {
   color: #cf1111;
   svg {

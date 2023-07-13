@@ -41,4 +41,15 @@
   .twitter-link:visited {
     color: $color-grey-dark-2;
   }
+  @include mobile {
+    padding-bottom: 8vh;
+  }
+  &_mobile {
+    @include mobile {
+      padding: 0 3rem;
+      position: absolute;
+      bottom: 10vh;
+      text-align: center;
+    }
+  }
 }

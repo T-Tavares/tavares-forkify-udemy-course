@@ -24,6 +24,43 @@ export const state = {
   devLogged: false,
 };
 
+// ----------------------- MODEL - MOBILE ------------------------- //
+// -------------------------- FUNCTIONS --------------------------- //
+function randomArrEl(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export async function fetchRandomRecipe() {
+  const randomQueryArr = ['pizza', 'salad', 'dip', 'pasta', 'rice'];
+  const query = randomArrEl(randomQueryArr);
+
+  const dataRaw = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
+
+  return randomArrEl(dataRaw.data.recipes);
+}
+
+export async function fetchRandomRecipesArr(num) {
+  const recipesArr = [];
+
+  for (let i = 1; num >= i; i++) {
+    const recipeRaw = await fetchRandomRecipe();
+    const recipeObj = {
+      id: recipeRaw.id,
+      title: recipeRaw.title,
+      publisher: recipeRaw.publisher,
+      sourceUrl: recipeRaw.source_url,
+      image: recipeRaw.image_url,
+      servings: recipeRaw.servings,
+      cookingTime: recipeRaw.cooking_time,
+      ingredients: recipeRaw.ingredients,
+      ...(recipeRaw.key && { key: recipeRaw.key }),
+    };
+    recipesArr.push(recipeObj);
+  }
+  console.log(recipesArr);
+  return recipesArr;
+}
+
 // ----------------------- MODEL - RECIPES ------------------------ //
 // -------------------------- FUNCTIONS --------------------------- //
 
